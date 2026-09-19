@@ -12,7 +12,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const voterId = username;
+  const voterId = username.trim().toLowerCase();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   useEffect(() => {
@@ -518,7 +518,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
           },
           body: JSON.stringify({
             option: option,
-            voterId: localStorage.getItem("voterId"),
+            voterId: voterId,
           }),
         }
       );
