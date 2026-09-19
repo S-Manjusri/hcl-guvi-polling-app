@@ -106,6 +106,7 @@ func main() {
 	godotenv.Load()
 
 	mongoURI := os.Getenv("MONGODB_URI")
+	fmt.Println("Mongo URI loaded:", mongoURI != "")
 
 	// MongoDB connection
 
