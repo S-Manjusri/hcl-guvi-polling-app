@@ -28,7 +28,7 @@ function App() {
   const pollIdFromUrl = window.location.pathname.split("/poll/")[1];
   const pollId = pollIdFromUrl || "6aacc33bfd840fa5934ae3b3";
 
-  fetch(`http://localhost:8080/polls/${pollId}`)
+  fetch(`https://hcl-guvi-polling-app.onrender.com/polls/${pollId}`)
     .then((response) => response.json())
     .then((data) => {
       setPoll(data);
@@ -41,12 +41,12 @@ function App() {
     if (!poll) return;
 
     const socket = new WebSocket(
-      `ws://localhost:8080/polls/${poll.id}/ws`
+      `wss://hcl-guvi-polling-app.onrender.com/polls/${poll.id}/ws`
     );
 
     socket.onmessage = async () => {
   const response = await fetch(
-    `http://localhost:8080/polls/${poll.id}/results`
+    `https://hcl-guvi-polling-app.onrender.com/polls/${poll.id}/results`
   );
 
   const data = await response.json();
@@ -70,7 +70,7 @@ const loginUser = async () => {
   }
 
   try {
-    const response = await fetch("http://localhost:8080/login", {
+    const response = await fetch("https://hcl-guvi-polling-app.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ const registerUser = async () => {
   }
 
   try {
-    const response = await fetch("http://localhost:8080/register", {
+    const response = await fetch("https://hcl-guvi-polling-app.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +174,7 @@ if (!token) {
   return;
 }
 
-const response = await fetch("http://localhost:8080/polls", {
+const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -519,7 +519,7 @@ const response = await fetch("http://localhost:8080/polls", {
   onClick={async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/polls/${poll.id}/vote`,
+        `https://hcl-guvi-polling-app.onrender.com/polls/${poll.id}/vote`,
         {
           method: "POST",
           headers: {
@@ -539,7 +539,7 @@ const response = await fetch("http://localhost:8080/polls", {
 
       alert("Vote submitted successfully!");
       const resultResponse = await fetch(
-        `http://localhost:8080/polls/${poll.id}/results`
+        `https://hcl-guvi-polling-app.onrender.com/polls/${poll.id}/results`
     );
 
     const resultData = await resultResponse.json();
