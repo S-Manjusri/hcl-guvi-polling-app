@@ -165,7 +165,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 	r.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://hcl-guvi-polling-nlszzv4oq-s-manjusri-project.vercel.app")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://hcl-guvi-polling-app.vercel.app")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
