@@ -1,0 +1,10 @@
+Frontend/node_modules/
+Frontend/dist/
+
+Backend/pollserver.exe
+
+.env
+.env.local
+
+.DS_Store
+Thumbs.db
