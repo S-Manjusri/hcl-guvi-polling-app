@@ -103,10 +103,7 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	godotenv.Load()
 
 	mongoURI := os.Getenv("MONGODB_URI")
 
