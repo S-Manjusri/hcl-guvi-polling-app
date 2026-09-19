@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"net/http"
 	"strings"
 	"time"
@@ -16,6 +17,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"golang.org/x/crypto/bcrypt"
+	"github.com/joho/godotenv"
 )
 
 type Poll struct {
@@ -101,10 +103,17 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
+	err := godotenv.Load()
+if err != nil {
+    log.Fatal("Error loading .env file")
+}
+
+mongoURI := os.Getenv("MONGODB_URI")
 
 	// MongoDB connection
+
 	mongoClient, err := mongo.Connect(
-		options.Client().ApplyURI("mongodb://localhost:27017"),
+    	options.Client().ApplyURI(mongoURI),
 	)
 	if err != nil {
 		panic(err)
