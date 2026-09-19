@@ -12,16 +12,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [voterId] = useState(() => {
-  let id = localStorage.getItem("voterId");
-
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem("voterId", id);
-  }
-
-  return id;
-});
+  const voterId = username;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   useEffect(() => {
