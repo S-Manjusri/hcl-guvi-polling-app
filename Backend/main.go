@@ -4,20 +4,20 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/joho/godotenv"
 )
 
 type Poll struct {
@@ -104,16 +104,16 @@ var upgrader = websocket.Upgrader{
 
 func main() {
 	err := godotenv.Load()
-if err != nil {
-    log.Fatal("Error loading .env file")
-}
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-mongoURI := os.Getenv("MONGODB_URI")
+	mongoURI := os.Getenv("MONGODB_URI")
 
 	// MongoDB connection
 
 	mongoClient, err := mongo.Connect(
-    	options.Client().ApplyURI(mongoURI),
+		options.Client().ApplyURI(mongoURI),
 	)
 	if err != nil {
 		panic(err)
@@ -146,9 +146,14 @@ mongoURI := os.Getenv("MONGODB_URI")
 	}
 
 	// Redis connection
-	redisClient := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-	})
+	redisURL := os.Getenv("REDIS_ENDPOINT")
+
+	opt, err := redis.ParseURL(redisURL)
+	if err != nil {
+		panic(err)
+	}
+
+	redisClient := redis.NewClient(opt)
 
 	err = redisClient.Ping(context.Background()).Err()
 	if err != nil {
