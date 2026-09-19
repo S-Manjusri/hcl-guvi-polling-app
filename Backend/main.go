@@ -163,19 +163,13 @@ func main() {
 
 	// Gin server
 	r := gin.Default()
-	r.Use(cors.Default())
-	r.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://hcl-guvi-polling-app.vercel.app")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	})
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://hcl-guvi-polling-app.vercel.app"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+	}))
+	
 	r.POST("/register", func(c *gin.Context) {
 		var req RegisterRequest
 
