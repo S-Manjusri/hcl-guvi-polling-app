@@ -513,7 +513,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
           </h2>
         
 
-          {poll.options.map((option, index) => (
+          {(poll?.options || []).map((option, index) => (
             <button
   key={index}
   onClick={async () => {
@@ -603,7 +603,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
   <strong style={{ color: "#fefbfb" }}>{totalVotes}</strong>
 </div>
 
-    {poll.options.map((option) => (
+    {(poll?.options || []).map((option, index) => (
       <div
         key={option}
         style={{
