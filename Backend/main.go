@@ -164,7 +164,10 @@ func main() {
 	// Gin server
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://hcl-guvi-polling-app.vercel.app"},
+		AllowOrigins: []string{
+    		"https://hcl-guvi-polling-app.vercel.app",
+    		"http://localhost:5173",
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
