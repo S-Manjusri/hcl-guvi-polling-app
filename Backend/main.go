@@ -167,6 +167,7 @@ func main() {
 		AllowOrigins: []string{
     		"https://hcl-guvi-polling-app.vercel.app",
     		"http://localhost:5173",
+			"http://localhost:5174",
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
