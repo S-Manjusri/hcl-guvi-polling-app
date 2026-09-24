@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -12,6 +13,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const voterId = username.trim().toLowerCase();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -197,21 +199,28 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
       style={{
         maxWidth: "760px",
         margin: "0 auto",
-        padding: "40px 20px",
+        
         minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
         boxSizing: "border-box",
         backgroundColor: "#0f172a",
       }}
     >
-      {!isSharedPoll && !isLoggedIn && (
+      {!isSharedPoll && !isLoggedIn && !showRegister && (
     <div
       style={{
-        marginBottom: "30px",
+        width: "100%",
+        maxWidth: "420px",
+        height: "334px",
+        margin: "30px auto",
         padding: "24px",
         border: "1px solid #334155",
         borderRadius: "16px",
         backgroundColor: "#1e293b",
         boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+        boxSizing: "border-box",
       }}
     >
   <h2
@@ -242,15 +251,16 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
     }}
   />
 
+
+<div style={{ position: "relative", width: "100%", marginBottom: "18px" }}>
   <input
-    type="password"
+    type={showPassword ? "text" : "password"}
     placeholder="Password"
     value={password}
     onChange={(e) => setPassword(e.target.value)}
     style={{
       width: "100%",
-      padding: "12px",
-      marginBottom: "10px",
+      padding: "12px 45px 12px 12px",
       boxSizing: "border-box",
       backgroundColor: "#0f172a",
       color: "white",
@@ -260,10 +270,33 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
   />
 
   <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      right: "10px",
+      background: "none",
+      border: "none",
+      color: "#94a3b8",
+      cursor: "pointer",
+      fontSize: "18px",
+      padding: "5px",
+    }}
+  >
+    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+  </button>
+</div>
+
+
+
+  <button
   onClick={loginUser}
   style={{
-    padding: "10px 20px",
-    marginRight: "10px",
+    width: "100%",
+    padding: "12px",
+    marginRight: "0",
     backgroundColor: "#2563eb",
     color: "white",
     border: "none",
@@ -273,52 +306,66 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
 >
   Login
 </button>
-</div>
-)}
-  {isLoggedIn && (
-  <button
-    onClick={logoutUser}
-    style={{
-      padding: "10px 20px",
-      backgroundColor: "#dc2626",
-      color: "white",
-      border: "none",
-      borderRadius: "6px",
-      cursor: "pointer",
-    }}
-  >
-    Logout
-  </button>
-)}
-<p style={{ marginTop: "15px", color: "#6b7280" }}>
-  New user?
-</p>
-
 <button
   onClick={() => setShowRegister(true)}
   style={{
-    padding: "10px 20px",
-    backgroundColor: "#7c3aed",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
+    width: "100%",
+    marginTop: "12px",
+    padding: "11px",
+    backgroundColor: "transparent",
+    color: "#a78bfa",
+    border: "1px solid #7c3aed",
+    borderRadius: "8px",
     cursor: "pointer",
+    fontSize: "15px",
+    fontWeight: "600",
   }}
 >
-  Register
+  Create an Account
 </button>
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    margin: "16px 0",
+    color: "#64748b",
+    fontSize: "13px",
+  }}
+>
+  <div style={{ flex: 1, height: "1px", backgroundColor: "#334155" }} />
+  <span>or</span>
+  <div style={{ flex: 1, height: "1px", backgroundColor: "#334155" }} />
+</div>
+</div>
+)}
+ 
 
 {showRegister && (
   <div
     style={{
-      marginTop: "20px",
-      padding: "20px",
-      border: "1px solid #e5e7eb",
-      borderRadius: "8px",
-      backgroundColor: "#f9fafb",
-    }}
+  width: "100%",
+  maxWidth: "420px",
+  height: "334px",
+  margin: "30px auto",
+  padding: "24px",
+  border: "1px solid #334155",
+  borderRadius: "16px",
+  backgroundColor: "#1e293b",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+  boxSizing: "border-box",
+}}
   >
-    <h2>Register</h2>
+    <h2
+      style={{
+        marginTop: "0",
+        marginBottom: "18px",
+        color: "white",
+        fontSize: "22px",
+      }}
+    >
+      Create Your Account
+    </h2>
 
     <input
       type="text"
@@ -333,62 +380,103 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
       }}
     />
 
-    <input
-      type="password"
-      placeholder="Password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "12px",
-        marginBottom: "10px",
-        boxSizing: "border-box",
-      }}
-    />
+   <div style={{ position: "relative", marginBottom: "10px" }}>
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    style={{
+      width: "100%",
+      padding: "12px",
+      paddingRight: "45px",
+      boxSizing: "border-box",
+    }}
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: "absolute",
+      right: "10px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      background: "none",
+      border: "none",
+      color: "#64748b",
+      cursor: "pointer",
+    }}
+  >
+    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+  </button>
+</div>
 
     <button
       onClick={registerUser}
       style={{
-        padding: "10px 20px",
+        width: "100%",
+        padding: "12px",
         backgroundColor: "#7c3aed",
         color: "white",
         border: "none",
         borderRadius: "6px",
         cursor: "pointer",
-        marginRight: "10px",
+
       }}
     >
       Register
     </button>
 
-    <button
-      onClick={() => setShowRegister(false)}
-      style={{
-        padding: "10px 20px",
-        backgroundColor: "#6b7280",
-        color: "white",
-        border: "none",
-        borderRadius: "6px",
-        cursor: "pointer",
-      }}
-    >
-      Cancel
-    </button>
-  </div>
-)}
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
-        Live Polling Tool
-      </h1>
-      {!isSharedPoll && isLoggedIn && (
-      <div
+ <button
+  onClick={() => setShowRegister(false)}
   style={{
-    marginTop: "20px",
-    padding: "20px",
-    border: "1px solid #e5e7eb",
+    width: "100%",
+    marginTop: "10px",
+    padding: "11px",
+    backgroundColor: "transparent",
+    color: "#a78bfa",
+    border: "1px solid #7c3aed",
     borderRadius: "8px",
-    backgroundColor: "#f9fafb",
+    cursor: "pointer",
   }}
 >
+  Back to Login
+</button>
+  </div>
+)}
+      {!isSharedPoll && isLoggedIn && (
+  <div>
+    <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
+      Live Polling Tool
+    </h1>
+    {isLoggedIn && (
+  <button
+    onClick={logoutUser}
+    style={{
+      padding: "10px 20px",
+      backgroundColor: "#dc2626",
+      color: "white",
+      border: "none",
+      borderRadius: "6px",
+      cursor: "pointer",
+      margin: "0 auto 20px",
+      display: "block",
+    }}
+  >
+    Logout
+  </button>
+)}
+
+    <div
+      style={{
+        marginTop: "20px",
+        padding: "20px",
+        border: "1px solid #e5e7eb",
+        borderRadius: "8px",
+        backgroundColor: "#f9fafb",
+      }}
+    >
       <h2>Create a Poll</h2>
 
       <input
@@ -455,8 +543,9 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
   Create Poll
 </button>
     </div>
+    </div>
     )}
-      {poll && (
+      {poll && isLoggedIn && (
         <div
           style={{
             marginTop: "30px",
@@ -650,7 +739,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
   </div>
 )}
 
-          
+          {isLoggedIn && (
           <div
   style={{ 
     marginTop: "20px", 
@@ -705,6 +794,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
   Copy Poll Link
 </button>
 </div>
+)}
         </div>
       )}
     </div>
