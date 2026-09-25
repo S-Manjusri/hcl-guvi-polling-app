@@ -14,7 +14,7 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const voterId = username.trim().toLowerCase();
+  const voterId = username.trim().toLowerCase() || crypto.randomUUID();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   useEffect(() => {
@@ -31,7 +31,7 @@ function App() {
     });
 }, []);
   useEffect(() => {
-    if (!poll) return;
+     if (!poll || !isLoggedIn) return;
 
     const socket = new WebSocket(
       `wss://hcl-guvi-polling-app.onrender.com/polls/${poll.id}/ws`
@@ -184,6 +184,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
       }
 
       const data = await response.json();
+      console.log("CREATE POLL RESPONSE:", data);
       setPoll(data);
       alert("Poll created successfully!");
     } catch (error) {
@@ -545,7 +546,7 @@ const response = await fetch("https://hcl-guvi-polling-app.onrender.com/polls", 
     </div>
     </div>
     )}
-      {poll && isLoggedIn && (
+      {poll && (isLoggedIn || isSharedPoll) && (
         <div
           style={{
             marginTop: "30px",
